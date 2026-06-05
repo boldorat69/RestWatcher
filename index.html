@@ -45,7 +45,7 @@
                         <li><strong>Топ 10-столов</strong> — рейтинг столов по выручке, количеству чеков и среднему чеку</li>
                         <li><strong>Заказы по категориям и валютам</strong> — детальная разбивка: категория → подкатегория → блюдо, с типами оплат</li>
                         <li><strong>Выручка по часам</strong> — почасовая разбивка с пиковыми часами 🔥 и сегментами (завтрак/обед/ужин)</li>
-                        <li><strong>Специальные отчёты</strong> — возможность добавить произвольный отчёт под конкретные требования</li>
+                        <li><strong>Специальные отчёты</strong> — возможность добавить произвольный отчёт под конкретные требования пользователей </li>
                     </ul>
                 </div>
                 <div class="feature-card feature-card-wide">
@@ -179,9 +179,18 @@
     <!-- Lightbox -->
     <div id="lightbox" class="lightbox" onclick="closeLightbox()">
         <span class="lightbox-close">&times;</span>
+        <span class="lightbox-arrow lightbox-prev" onclick="event.stopPropagation(); prevScreenshot()">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </span>
+        <span class="lightbox-arrow lightbox-next" onclick="event.stopPropagation(); nextScreenshot()">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </span>
         <div class="lightbox-content" onclick="event.stopPropagation()">
             <img id="lightbox-img" src="" alt="">
-            <p id="lightbox-caption"></p>
+            <div class="lightbox-meta">
+                <p id="lightbox-caption"></p>
+                <span id="lightbox-counter"></span>
+            </div>
         </div>
     </div>
 

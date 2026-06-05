@@ -461,10 +461,61 @@ a:hover {
     opacity: 0.7;
     transition: opacity var(--transition);
     line-height: 1;
+    z-index: 2;
 }
 
 .lightbox-close:hover {
     opacity: 1;
+}
+
+.lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    color: var(--text-primary);
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all var(--transition);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.lightbox-arrow:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.lightbox-prev {
+    left: 16px;
+}
+
+.lightbox-next {
+    right: 16px;
+}
+
+.lightbox-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.lightbox-meta #lightbox-caption {
+    font-size: 15px;
+    color: var(--text-secondary);
+}
+
+#lightbox-counter {
+    font-size: 13px;
+    color: var(--text-secondary);
+    opacity: 0.6;
 }
 
 /* --- Animations --- */
