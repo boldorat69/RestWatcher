@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RestWatcher — Telegram-бот для аналитики ресторанов</title>
+    <meta name="description" content="RestWatcher — Telegram-бот для мониторинга и аналитики ресторанов на базе r_keeper 7. Продажи, скидки, выручка по часам, ИИ-ассистент и многое другое.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+</head>
+<body>
+    <!-- Header / Hero -->
+    <header class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">v1.14.3</div>
+            <h1>RestWatcher</h1>
+            <p class="hero-subtitle">Telegram-бот для мониторинга и аналитики<br>ресторанов на базе r_keeper 7</p>
+            <div class="hero-buttons">
+                <a href="https://t.me/RestwatcherBot" class="btn btn-primary" target="_blank" rel="noopener">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2.5L2.5 10.5L9.5 13.5L12.5 20.5L21.5 2.5Z"/></svg>
+                    Открыть бота
+                </a>
+                <a href="#features" class="btn btn-secondary">Возможности</a>
+            </div>
+        </div>
+        <div class="hero-scroll" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+        </div>
+    </header>
+
+    <!-- Features -->
+    <section id="features" class="section">
+        <div class="container">
+            <h2 class="section-title">Возможности</h2>
+            <p class="section-desc">RestWatcher предоставляет управляющим ресторанов полный набор инструментов для анализа работы заведения прямо в Telegram. Все отчёты поддерживают произвольный диапазон дат и сравнение с предыдущим периодом.</p>
+            <div class="features-grid">
+                <div class="feature-card feature-card-wide">
+                    <div class="feature-icon">📊</div>
+                    <h3>Продажи</h3>
+                    <ul class="feature-list">
+                        <li><strong>Сводка продаж</strong> — выручка, средний чек, количество гостей и чеков за период. Детализация по дням с просмотром каждого дня</li>
+                        <li><strong>Топ блюд</strong> — рейтинг блюд по выручке и количеству продаж с пагинацией</li>
+                        <li><strong>Топ категорий</strong> — выручка по категориям меню (основная классификация 2560)</li>
+                        <li><strong>Топ столов</strong> — рейтинг столов по выручке, количеству чеков и среднему чеку</li>
+                        <li><strong>Заказы по категориям</strong> — детальная разбивка: категория → подкатегория → блюдо, с типами оплат</li>
+                        <li><strong>Выручка по часам</strong> — почасовая разбивка с пиковыми часами 🔥 и сегментами (завтрак/обед/ужин)</li>
+                        <li><strong>Специальный отчёт</strong> — кастомная сводка: выручка, количество, средний чек с дельтой</li>
+                    </ul>
+                </div>
+                <div class="feature-card feature-card-wide">
+                    <div class="feature-icon">🏷️</div>
+                    <h3>Скидки и наценки</h3>
+                    <ul class="feature-list">
+                        <li><strong>Сводка по скидкам</strong> — общая сумма скидок, наценок и итог после применения за период. Детализация по дням</li>
+                        <li><strong>Детальный отчёт</strong> — разбор скидок и наценок по типам для выбранной даты</li>
+                    </ul>
+                </div>
+                <div class="feature-card feature-card-wide">
+                    <div class="feature-icon">🚫</div>
+                    <h3>Отмены</h3>
+                    <ul class="feature-list">
+                        <li><strong>Сводка по отменам</strong> — количество и сумма отменённых пречеков за период. Детализация по дням с максимумами</li>
+                        <li><strong>Детали отмен</strong> — список отменённых пречеков с указанием времени, стола, менеджера и причины</li>
+                        <li><strong>Топ менеджеров по отменам</strong> — рейтинг менеджеров по количеству и сумме отмен</li>
+                    </ul>
+                </div>
+                <div class="feature-card feature-card-wide">
+                    <div class="feature-icon">👨‍🍳</div>
+                    <h3>Персонал</h3>
+                    <ul class="feature-list">
+                        <li><strong>Топ официантов</strong> — рейтинг по выручке за период. Детализация по дням</li>
+                        <li><strong>Топ менеджеров по отменам</strong> — контроль качества работы управляющего персонала</li>
+                    </ul>
+                </div>
+                <div class="feature-card feature-card-wide">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Смены</h3>
+                    <ul class="feature-list">
+                        <li><strong>Сводка по смене</strong> — выручка по типам оплат (нал/карта), количество чеков и гостей за дату</li>
+                        <li><strong>Чеки за дату</strong> — список всех чеков с возможностью фильтрации по номеру стола и просмотра деталей каждого чека</li>
+                        <li><strong>Открытая смена</strong> — мониторинг текущей смены в реальном времени: продажи, скидки, отмены, чеки, топ столов</li>
+                    </ul>
+                </div>
+                <div class="feature-card feature-card-wide">
+                    <div class="feature-icon">📅</div>
+                    <h3>Гибкий выбор периода</h3>
+                    <ul class="feature-list">
+                        <li><strong>Пресеты</strong> — «Вчера», «Позавчера», «Последние 7 дней», «Последние 14 дней», «Этот месяц», «Прошлый месяц»</li>
+                        <li><strong>Ручной ввод</strong> — произвольный диапазон дат в формате ДД.ММ.ГГГГ</li>
+                        <li><strong>Сравнение периодов</strong> — каждый отчёт можно сравнить с предыдущим периодом той же длины с дельтой и процентом изменения</li>
+                    </ul>
+                </div>
+                <div class="feature-card feature-card-wide">
+                    <div class="feature-icon">🤖</div>
+                    <h3>ИИ-ассистент</h3>
+                    <ul class="feature-list">
+                        <li>Задайте вопрос голосом 🎤 или текстом ✍️ на русском, украинском или английском</li>
+                        <li>ИИ самостоятельно анализирует запрос, подбирает таблицы и связи из базы знаний r_keeper, генерирует SQL</li>
+                        <li>Результат форматируется в читаемый отчёт с итогами, долями и пиковыми значениями</li>
+                        <li>Поддержка Gemini AI (основной) и GPT-4o (фолбэк) для отказоустойчивости</li>
+                        <li>Работает через read-only пользователя БД — безопасность данных гарантирована</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section id="screenshots" class="section section-dark">
+        <div class="container">
+            <h2 class="section-title">Скриншоты</h2>
+            <p class="section-desc">Как выглядит бот в работе. Нажмите на изображение для увеличения.</p>
+            <div class="screenshots-grid" id="screenshots-grid">
+                <!-- filled by js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Технологии</h2>
+            <p class="section-desc">Современный стек для надёжной и быстрой работы.</p>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14.25 18l-3-3 3-3 1.5 1.5-1.5 1.5 1.5 1.5-1.5 1.5zM9.75 6l3 3-3 3-1.5-1.5 1.5-1.5-1.5-1.5L9.75 6z"/></svg></div>
+                    <span>Python 3.14</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🤖</div>
+                    <span>aiogram 3</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🌐</div>
+                    <span>Django 6</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🗄️</div>
+                    <span>MSSQL / r_keeper 7</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🧠</div>
+                    <span>Gemini AI + GPT-4o</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">⏱️</div>
+                    <span>APScheduler</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🔒</div>
+                    <span>Read-Only DB User</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🌍</div>
+                    <span>RU / UK / EN</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section section-dark cta">
+        <div class="container">
+            <h2 class="section-title">Попробуйте бесплатно</h2>
+            <p class="section-desc">Запустите бота и оцените все возможности. Для подключения к вашей БД r_keeper потребуется доступ read-only.</p>
+            <a href="https://t.me/RestwatcherBot" class="btn btn-primary btn-large" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2.5L2.5 10.5L9.5 13.5L12.5 20.5L21.5 2.5Z"/></svg>
+                Открыть в Telegram
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://github.com/boldorat69/RestWatcher" target="_blank" rel="noopener">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.73.083-.73 1.205.085 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12 24 5.37 18.63 0 12 0z"/></svg>
+                    GitHub
+                </a>
+            </div>
+            <p class="footer-copy">RestWatcher &copy; 2026</p>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="">
+            <p id="lightbox-caption"></p>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
