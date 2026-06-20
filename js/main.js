@@ -1,88 +1,161 @@
-/**
- * RestWatcher — Presentation Site
- * Screenshot gallery + lightbox
- */
+(function () {
+  "use strict";
 
-const SCREENSHOTS = [
-    { file: "main-menu.png", label: "Главное меню" },
-    { file: "sales-summary.png", label: "Сводка продаж" },
-    { file: "discounts.png", label: "Скидки" },
-    { file: "top-waiters.png", label: "Топ официантов" },
-    { file: "hourly-revenue.png", label: "Выручка по часам" },
-    { file: "top-tables.png", label: "Топ столов" },
-    { file: "ai-assistant.png", label: "ИИ-ассистент" },
-    { file: "ai-result.png", label: "Ответ ИИ" },
-    { file: "date-range.png", label: "Выбор периода" },
-    { file: "compare-periods.png", label: "Сравнение периодов" },
-    { file: "open-shift.png", label: "Открытая смена" },
-    { file: "cancellations.png", label: "Отмены" },
-];
+  /* === Screenshots === */
+  const SCREENSHOTS = [
+    "main-menu", "sales-summary", "discounts",
+    "cancellations", "top-tables", "top-waiters",
+    "hourly-revenue", "open-shift", "date-range",
+    "compare-periods", "ai-assistant", "ai-result",
+  ];
 
-let currentIndex = 0;
+  function buildGallery() {
+    const gallery = document.getElementById("gallery");
+    if (!gallery) return;
+    SCREENSHOTS.forEach(function (name, i) {
+      const div = document.createElement("div");
+      div.className = "gallery__item";
+      div.dataset.index = i;
+      const img = document.createElement("img");
+      img.src = "screenshots/" + name + ".png";
+      img.alt = name;
+      img.loading = "lazy";
+      div.appendChild(img);
+      gallery.appendChild(div);
+    });
+  }
 
-function buildGallery() {
-    const grid = document.getElementById("screenshots-grid");
-    if (!grid) return;
+  /* === Lightbox === */
+  var lightboxEl = document.getElementById("lightbox");
+  var lightboxImg = document.getElementById("lightboxImg");
+  var lightboxClose = document.getElementById("lightboxClose");
+  var lightboxPrev = document.getElementById("lightboxPrev");
+  var lightboxNext = document.getElementById("lightboxNext");
+  var currentIndex = 0;
 
-    grid.innerHTML = SCREENSHOTS.map((s, i) => {
-        const imgPath = `screenshots/${s.file}`;
-        return `
-            <div class="screenshot-item" onclick="openLightbox(${i})">
-                <img src="${imgPath}" alt="${s.label}" loading="lazy"
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="screenshot-placeholder" style="display:none;">
-                    <span class="icon">📷</span>
-                    <span>${s.label}</span>
-                    <span style="font-size:11px;">скриншот скоро</span>
-                </div>
-                <div class="label">${s.label}</div>
-            </div>
-        `;
-    }).join("");
-}
-
-function openLightbox(index) {
+  function openLightbox(index) {
     currentIndex = index;
-    showScreenshot();
-    const lb = document.getElementById("lightbox");
-    if (!lb) return;
-    lb.classList.add("active");
+    lightboxImg.src = "screenshots/" + SCREENSHOTS[index] + ".png";
+    lightboxImg.alt = SCREENSHOTS[index];
+    lightboxEl.classList.add("is-open");
     document.body.style.overflow = "hidden";
-}
+  }
 
-function showScreenshot() {
-    const img = document.getElementById("lightbox-img");
-    const cap = document.getElementById("lightbox-caption");
-    const counter = document.getElementById("lightbox-counter");
-    if (!img || !cap || !counter) return;
-
-    const s = SCREENSHOTS[currentIndex];
-    img.src = `screenshots/${s.file}`;
-    cap.textContent = s.label;
-    counter.textContent = `${currentIndex + 1} / ${SCREENSHOTS.length}`;
-}
-
-function prevScreenshot() {
-    currentIndex = (currentIndex - 1 + SCREENSHOTS.length) % SCREENSHOTS.length;
-    showScreenshot();
-}
-
-function nextScreenshot() {
-    currentIndex = (currentIndex + 1) % SCREENSHOTS.length;
-    showScreenshot();
-}
-
-function closeLightbox() {
-    const lb = document.getElementById("lightbox");
-    if (!lb) return;
-    lb.classList.remove("active");
+  function closeLightbox() {
+    lightboxEl.classList.remove("is-open");
     document.body.style.overflow = "";
-}
+  }
 
-document.addEventListener("DOMContentLoaded", buildGallery);
+  function prevImage() {
+    currentIndex = (currentIndex - 1 + SCREENSHOTS.length) % SCREENSHOTS.length;
+    lightboxImg.src = "screenshots/" + SCREENSHOTS[currentIndex] + ".png";
+    lightboxImg.alt = SCREENSHOTS[currentIndex];
+  }
 
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeLightbox();
-    if (e.key === "ArrowLeft") prevScreenshot();
-    if (e.key === "ArrowRight") nextScreenshot();
-});
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % SCREENSHOTS.length;
+    lightboxImg.src = "screenshots/" + SCREENSHOTS[currentIndex] + ".png";
+    lightboxImg.alt = SCREENSHOTS[currentIndex];
+  }
+
+  function initLightbox() {
+    document.addEventListener("click", function (e) {
+      var item = e.target.closest(".gallery__item");
+      if (item) openLightbox(parseInt(item.dataset.index, 10));
+    });
+    if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
+    if (lightboxPrev) lightboxPrev.addEventListener("click", prevImage);
+    if (lightboxNext) lightboxNext.addEventListener("click", nextImage);
+    lightboxEl.addEventListener("click", function (e) {
+      if (e.target === lightboxEl) closeLightbox();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (!lightboxEl.classList.contains("is-open")) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") prevImage();
+      if (e.key === "ArrowRight") nextImage();
+    });
+  }
+
+  /* === i18n === */
+  var currentLang = localStorage.getItem("rw_lang") || "ru";
+
+  function applyTranslations(lang) {
+    var t = TRANSLATIONS[lang];
+    if (!t) return;
+    document.documentElement.lang = lang;
+    /* textContent replacements */
+    var textEls = document.querySelectorAll("[data-i18n]");
+    textEls.forEach(function (el) {
+      var key = el.dataset.i18n;
+      if (t[key]) el.textContent = t[key];
+    });
+    /* innerHTML replacements */
+    var htmlEls = document.querySelectorAll("[data-i18n-html]");
+    htmlEls.forEach(function (el) {
+      var key = el.dataset.i18nHtml;
+      if (t[key]) el.innerHTML = t[key];
+    });
+    /* update active lang button */
+    document.querySelectorAll(".lang-btn").forEach(function (btn) {
+      btn.classList.toggle("is-active", btn.dataset.lang === lang);
+    });
+  }
+
+  function switchLang(lang) {
+    currentLang = lang;
+    localStorage.setItem("rw_lang", lang);
+    applyTranslations(lang);
+  }
+
+  function initI18n() {
+    applyTranslations(currentLang);
+    document.querySelectorAll(".lang-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        switchLang(btn.dataset.lang);
+      });
+    });
+  }
+
+  /* === Header scroll === */
+  function initHeader() {
+    var header = document.getElementById("header");
+    var ticking = false;
+    window.addEventListener("scroll", function () {
+      if (!ticking) {
+        window.requestAnimationFrame(function () {
+          header.classList.toggle("header--scrolled", window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  }
+
+  /* === Hamburger === */
+  function initHamburger() {
+    var hamburger = document.getElementById("hamburger");
+    var nav = document.getElementById("nav");
+    if (!hamburger || !nav) return;
+    hamburger.addEventListener("click", function () {
+      hamburger.classList.toggle("is-active");
+      nav.classList.toggle("is-open");
+    });
+    /* close nav on link click */
+    nav.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        hamburger.classList.remove("is-active");
+        nav.classList.remove("is-open");
+      });
+    });
+  }
+
+  /* === Init === */
+  document.addEventListener("DOMContentLoaded", function () {
+    buildGallery();
+    initLightbox();
+    initI18n();
+    initHeader();
+    initHamburger();
+  });
+})();
